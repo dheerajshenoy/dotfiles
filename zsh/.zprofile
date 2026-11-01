@@ -1,0 +1,9 @@
+export EDITOR='nvim'
+export BROWSER='firefox'
+export TERMINAL='kitty'
+export MANPAGER='less'
+export PAGER='less'
+export VISUAL='nvim'
+export XDG_SESSION_TYPE=wayland
+export QT_QPA_PLATFORM=wayland
+export QT_QPA_PLATFORMTHEME=qt6ct

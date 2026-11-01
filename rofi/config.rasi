@@ -1,0 +1,5 @@
+configuration {
+    font: "Berkeley Mono 12";
+}
+
+@theme "solarized"

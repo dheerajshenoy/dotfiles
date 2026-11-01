@@ -1,0 +1,3 @@
+[[rule]]
+include = ["config.toml"]
+schema.path = "/home/dheeraj/Gits/lektra/schema/lektra-config.schema.json"

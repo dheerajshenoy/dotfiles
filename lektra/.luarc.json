@@ -1,0 +1,7 @@
+{
+    "workspace": {
+        "library": [
+            "~/Gits/lektra/stubs/lua/"
+        ],
+    },
+}
