@@ -2,33 +2,13 @@
 
 ## For Applications
 
-### Shell
-
 - Zsh
-
-### Editor
-
 - Neovim
 - Emacs
-
-### Terminal
-
 - Kitty
-
-### Window Manager
-
 - SwayWM
-
-### Run Launcher
-
 - Rofi
-
-### Document Viewer
-
 - Lektra
-
-### Terminal Multiplexer
-
 - Tmux
 
 ## How to Install ?
