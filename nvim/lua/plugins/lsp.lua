@@ -18,5 +18,3 @@ vim.diagnostic.config({
     virtual_text = true,
     severity_sort = true,
 })
-
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
