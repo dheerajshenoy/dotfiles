@@ -2,7 +2,7 @@ vim.pack.add({
     "https://github.com/neovim/nvim-lspconfig",
 })
 
-vim.lsp.config("lua_ls", {
+vim.lsp.config["lua_ls"] = {
     settings = {
         Lua = {
             runtime = { version = "LuaJIT" },
@@ -10,9 +10,19 @@ vim.lsp.config("lua_ls", {
             telemetry = { enable = false },
         },
     },
-})
+}
 
-vim.lsp.enable({ "lua_ls", "clangd", "pyright" })
+vim.lsp.config["tinymist"] = {
+    cmd = { "tinymist" },
+    filetypes = { "typst" },
+    settings = {
+        exportPdf = "onSave",
+    }
+}
+
+
+
+vim.lsp.enable({ "lua_ls", "clangd", "pyright", "taplo", "tinymist" })
 
 vim.diagnostic.config({
     virtual_text = true,
