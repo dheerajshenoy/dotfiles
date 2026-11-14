@@ -24,12 +24,12 @@ local function set_highlights()
     local raised = pick({ "CursorLine", "bg" }, { "Pmenu", "bg" }, { "ColorColumn", "bg" })
     local higher = pick({ "Visual", "bg" }, { "PmenuSel", "bg" }, { "Pmenu", "bg" })
 
-    hi("StatusLine",      { bg = NONE, fg = NONE })
-    hi("StatusLineNC",    { bg = NONE, fg = pick({ "Comment", "fg" }) })
-    hi("StatusMode",      { bg = accent, fg = dark, bold = true })
-    hi("StatusFile",      { bg = raised, fg = text })
+    hi("StatusLine", { bg = NONE, fg = NONE })
+    hi("StatusLineNC", { bg = NONE, fg = pick({ "Comment", "fg" }) })
+    hi("StatusMode", { bg = accent, fg = dark, bold = true })
+    hi("StatusFile", { bg = raised, fg = text })
     hi("StatusGitBranch", { bg = higher, fg = text })
-    hi("StatusFileType",  { bg = raised, fg = text })
+    hi("StatusFileType", { bg = raised, fg = text })
 end
 
 
@@ -38,11 +38,26 @@ vim.api.nvim_create_autocmd("ColorScheme", { callback = set_highlights })
 
 -- built once, not on every redraw
 local mode_names = {
-    n = "NORMAL", no = "PENDING", v = "VISUAL", V = "V-LINE",
-    ["\22"] = "V-BLOCK", s = "SELECT", S = "S-LINE", ["\19"] = "S-BLOCK",
-    i = "INSERT", R = "REPLACE", Rv = "V-REPLACE", c = "COMMAND",
-    cv = "EX", ce = "EX", r = "PROMPT", rm = "MORE", ["r?"] = "CONFIRM",
-    ["!"] = "SHELL", t = "TERMINAL", nt = "NORMAL",
+    n = "NORMAL",
+    no = "PENDING",
+    v = "VISUAL",
+    V = "V-LINE",
+    ["\22"] = "V-BLOCK",
+    s = "SELECT",
+    S = "S-LINE",
+    ["\19"] = "S-BLOCK",
+    i = "INSERT",
+    R = "REPLACE",
+    Rv = "V-REPLACE",
+    c = "COMMAND",
+    cv = "EX",
+    ce = "EX",
+    r = "PROMPT",
+    rm = "MORE",
+    ["r?"] = "CONFIRM",
+    ["!"] = "SHELL",
+    t = "TERMINAL",
+    nt = "NORMAL",
 }
 
 local get_mode = vim.api.nvim_get_mode
@@ -85,15 +100,16 @@ function StatusFileType()
     return "%#StatusFileType# " .. esc(ft:upper()) .. " "
 end
 
-vim.o.statusline = table.concat({
-    "%#StatusMode# %{v:lua.StatusMode()} ",
-    "%{%v:lua.StatusFile()%}",
-    "%#StatusLine#",
-    "%=",
-    "%{%v:lua.StatusGitBranch()%}",
-    "%#StatusLineNC# %p%% ",
-    "%{%v:lua.StatusFileType()%}",
-})
+local function set_statusline()
+    vim.o.statusline = table.concat({
+        "%#StatusMode# %{v:lua.StatusMode()} ",
+        "%{%v:lua.StatusFile()%}",
+        "%#StatusLine#",
+        "%=",
+        "%{%v:lua.StatusGitBranch()%}",
+        "%#StatusLineNC# %p%% ",
+        "%{%v:lua.StatusFileType()%}",
+    })
+end
 
-vim.opt.laststatus = 3
-vim.opt.showmode = false
+vim.api.nvim_create_autocmd("UIEnter", { once = true, callback = set_statusline })

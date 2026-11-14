@@ -1,3 +1,4 @@
+require("plugins.lz")
 require("plugins.colorscheme")
 require("plugins.tree-sitter")
 require("plugins.lsp")

@@ -5,7 +5,6 @@ opt.menubar.show = false
 opt.command_palette.sort_by_frequency = true
 opt.command_palette.description = true
 opt.behavior.remember_last_visited = true
-
 opt.tabs = {
     min_width = 120,
     full_path = true,
@@ -39,7 +38,7 @@ opt.llm_view = {
 opt.statusbar = {
     padding = 10,
     layout = {
-        left = { "session", "page" },
+        left = { "filename", "session", "page" },
         right = { "progress", "mode" },
     },
 }
@@ -57,3 +56,5 @@ opt.presentation = {
     allowed_actions = { "zoom_in", "zoom_out", "next_page", "previous_page" },
     laser_on_start = true,
 }
+
+opt.minimap.enabled = false

@@ -32,6 +32,10 @@
       "rev": "221ce6b2d999187044529f49da6554a92f740a96",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
+    "lz.n": {
+      "rev": "f248560f3cd2081b1c960f6d0400dbfc585a4045",
+      "src": "https://github.com/lumen-oss/lz.n"
+    },
     "nvim": {
       "rev": "edefef779ab08ce1a4a404713e3012b0d202bd35",
       "src": "https://github.com/catppuccin/nvim"

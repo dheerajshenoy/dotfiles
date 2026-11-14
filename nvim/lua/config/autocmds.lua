@@ -1,23 +1,27 @@
--- Turn on treesitter highlighting for any filetype that has a parser
-vim.api.nvim_create_autocmd("FileType", {
-    callback = function(ev) pcall(vim.treesitter.start, ev.buf) end,
+local autocmd = vim.api.nvim_create_autocmd
+
+autocmd('FileType', {
+    callback = function(args)
+        pcall(vim.treesitter.start, args.buf)
+    end,
 })
 
 -- Highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
+autocmd("TextYankPost", {
     group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
     callback = function()
         vim.hl.hl_op({ timeout = 250 })
     end,
 })
 
-vim.api.nvim_create_autocmd('LspAttach', {
+autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspAttach', { clear = true }),
     callback = function(ev)
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
         if client and client.name == 'clangd' then
-            vim.keymap.set('n', '<leader>fp', ":LspClangdSwitchSourceHeader<CR>", { buffer = ev.buf, desc = 'clangd: Switch source/header' })
+            vim.keymap.set('n', '<leader>fp', ":LspClangdSwitchSourceHeader<CR>",
+                { buffer = ev.buf, desc = 'clangd: Switch source/header' })
         end
 
         local map = function(keys, fn, desc)
@@ -26,16 +30,22 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         map('gd', vim.lsp.buf.definition, 'Go to definition')
         map('gr', vim.lsp.buf.references, 'References')
-        map('K',  vim.lsp.buf.hover, 'Hover docs')
+        map('K', vim.lsp.buf.hover, 'Hover docs')
         map('<leader>rn', vim.lsp.buf.rename, 'Rename')
         map('<leader>ca', vim.lsp.buf.code_action, 'Code action')
     end,
 })
 
-vim.api.nvim_create_autocmd('BufWritePre', {
+autocmd('BufWritePre', {
     group = vim.api.nvim_create_augroup('UserFormatOnSave', { clear = true }),
-    pattern = { '*.c', '*.cpp', '*.h', '*.hpp' },
+    pattern = { '*.c', '*.cpp', '*.h', '*.hpp', '*.lua', '*.py', '*.rs', '*.ts', '*.tsx', '*.js', '*.jsx' },
     callback = function(ev)
         vim.lsp.buf.format({ bufnr = ev.buf, async = false, timeout_ms = 2000 })
     end,
+})
+
+autocmd("BufWritePre", {
+    group = vim.api.nvim_create_augroup("TrimWhitespaceOnSave", { clear = true }),
+    pattern = { "*" },
+    command = [[%s/\s\+$//e]],
 })
