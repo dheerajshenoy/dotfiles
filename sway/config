@@ -162,10 +162,9 @@ gaps inner 10
 # output "HP Inc. HP E27 G5 CNC4231NW9" resolution 1920x1080 position 3456,0 scale 1.0
 # output "HP Inc. HP P24h G5 3CM5031JJC" resolution 1920x1080 position 5376,0 scale 1.0
 
-exec kanshi
 exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg
 exec --no-startup-id /lib64/polkit-gnome/polkit-gnome-authentication-agent-1
-output * bg ~/Gits/wallpapers/68.png fill
+output * bg ~/Gits/wallpapers/9dwtei1vn1ve1.png fill
 
 # Force the Godot Editor to open floating
 for_window [app_id="godot"] floating enable
@@ -175,3 +174,5 @@ for_window [app_id="godot"] floating enable
 for_window [title=".*Godot.*"] floating enable
 
 include /etc/sway/config.d/*
+
+exec_always --no-startup-id sh -c 'pkill kanshi; sleep 1; kanshi -c ~/.config/kanshi/config'
