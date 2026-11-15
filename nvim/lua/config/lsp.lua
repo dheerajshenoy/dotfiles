@@ -16,7 +16,7 @@ vim.lsp.config('lua_ls', {
 })
 
 vim.lsp.config('clangd', {
-    cmd = { 'clangd', '--background-index', '--clang-tidy', '--header-insertion=never' },
+    cmd = { 'clangd', '--background-index', '--clang-tidy', '--header-insertion=never', '-j=4', '--pch-storage=memory' },
     filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
     root_markers = { 'compile_commands.json', '.clangd', '.git' },
 })

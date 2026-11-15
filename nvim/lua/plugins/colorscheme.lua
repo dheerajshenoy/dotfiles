@@ -6,6 +6,7 @@ return {
     opts = {
         flavour = 'mocha', -- latte, frappe, macchiato, mocha
         transparent_background = false,
+        auto_integrations = false, -- skip scanning installed plugins; integrations are listed below
         integrations = {
             treesitter = true,
             gitsigns = true,

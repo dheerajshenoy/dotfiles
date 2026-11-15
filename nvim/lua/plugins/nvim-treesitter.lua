@@ -23,7 +23,13 @@ return {
         -- the new version doesn't enable highlighting by itself
         vim.api.nvim_create_autocmd('FileType', {
             callback = function(args)
-                pcall(vim.treesitter.start, args.buf)
+                local lang = vim.treesitter.language.get_lang(args.match)
+                if lang and pcall(vim.treesitter.language.add, lang) then
+                    if pcall(vim.treesitter.start, args.buf, lang) then
+                        vim.wo[0][0].foldmethod = 'expr'
+                        vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+                    end
+                end
             end,
         })
     end,

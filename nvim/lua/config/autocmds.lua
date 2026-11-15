@@ -91,9 +91,12 @@ end,
 -- Remove whitespace on save
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
-    callback = function()
-        local pos = vim.api.nvim_win_get_cursor(0)
-        vim.cmd([[keeppatterns %s/\s\+$//e]])
-        vim.api.nvim_win_set_cursor(0, pos)
+    callback = function(event)
+        if vim.bo[event.buf].binary or vim.bo[event.buf].buftype ~= "" or not vim.bo[event.buf].modifiable then
+            return
+        end
+        local view = vim.fn.winsaveview()
+        vim.cmd([[silent! keeppatterns %s/\s\+$//e]])
+        vim.fn.winrestview(view)
     end,
 })
