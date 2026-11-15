@@ -3,16 +3,33 @@
 (setq gc-cons-threshold most-positive-fixnum)
 (setq gc-cons-percentage 0.5)
 
+(defvar my/file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
+(setq vc-handled-backends nil)
+
+(add-hook 'emacs-startup-hook
+          (lambda () (setq file-name-handler-alist my/file-name-handler-alist)
+            (setq vc-handled-backends '(Git))))
+
 (add-hook 'after-init-hook (lambda ()
                              (setq gc-cons-threshold (* 4 1024 1024))))
 
 ; Minimal UI
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(menu-bar-mode -1)
+(push '(tool-bar-lines . 0)   default-frame-alist)
+(push '(vertical-scroll-bars) default-frame-alist)
+(push '(menu-bar-lines . 0)   default-frame-alist)
 
-;; Disable splash screen
+
+(setq frame-inhibit-implied-resize t)
+(setq frame-resize-pixelwise t)
+(setq use-file-dialog nil)
+(setq use-short-answers t)
+(setq inhibit-startup-screen t)
 (setq inhibit-splash-screen t)
 (setq native-comp-async-report-warnings-errors 'silent)
 (setq inhibit-x-resources t)
-(setq inhibit-startup-echo-area-message t)
+(setq mode-line-format nil)
+(setq inhibit-startup-buffer-menu t)
+(setq inhibit-startup-echo-area-message user-login-name)
+(setq read-process-output-max (* 8 1024 1024))
+(setq initial-major-mode 'fundamental-mode)
