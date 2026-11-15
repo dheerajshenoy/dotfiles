@@ -1,51 +1,99 @@
-local autocmd = vim.api.nvim_create_autocmd
+local function augroup(name)
+    return vim.api.nvim_create_augroup("augroup_" .. name, { clear = true })
+end
 
-autocmd('FileType', {
-    callback = function(args)
-        pcall(vim.treesitter.start, args.buf)
+-- Check if we need to reload the file when it changed
+vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+    group = augroup("checktime"),
+    callback = function()
+        if vim.o.buftype ~= "nofile" then
+            vim.cmd("checktime")
+        end
     end,
 })
 
 -- Highlight on yank
-autocmd("TextYankPost", {
-    group = vim.api.nvim_create_augroup("highlight-yank", { clear = true }),
+vim.api.nvim_create_autocmd("TextYankPost", {
+    group = augroup("highlight_yank"),
     callback = function()
-        vim.hl.hl_op({ timeout = 250 })
-    end,
-})
-
-autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('UserLspAttach', { clear = true }),
-    callback = function(ev)
-        local client = vim.lsp.get_client_by_id(ev.data.client_id)
-
-        if client and client.name == 'clangd' then
-            vim.keymap.set('n', '<leader>fp', ":LspClangdSwitchSourceHeader<CR>",
-                { buffer = ev.buf, desc = 'clangd: Switch source/header' })
+        if vim.fn.has("nvim-0.13") == 1 then
+            vim.hl.hl_op()
+        else
+            (vim.hl or vim.highlight).on_yank()
         end
+    end,
+})
 
-        local map = function(keys, fn, desc)
-            vim.keymap.set('n', keys, fn, { buffer = ev.buf, desc = 'LSP: ' .. desc })
+-- resize splits if window got resized
+vim.api.nvim_create_autocmd({ "VimResized" }, {
+    group = augroup("resize_splits"),
+    callback = function()
+        local current_tab = vim.fn.tabpagenr()
+        vim.cmd("tabdo wincmd =")
+        vim.cmd("tabnext " .. current_tab)
+    end,
+})
+
+-- go to last loc when opening a buffer
+vim.api.nvim_create_autocmd("BufReadPost", {
+    group = augroup("last_loc"),
+    callback = function(event)
+        local exclude = { "gitcommit" }
+        local buf = event.buf
+        if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
+            return
         end
-
-        map('gd', vim.lsp.buf.definition, 'Go to definition')
-        map('gr', vim.lsp.buf.references, 'References')
-        map('K', vim.lsp.buf.hover, 'Hover docs')
-        map('<leader>rn', vim.lsp.buf.rename, 'Rename')
-        map('<leader>ca', vim.lsp.buf.code_action, 'Code action')
+        vim.b[buf].lazyvim_last_loc = true
+        local mark = vim.api.nvim_buf_get_mark(buf, '"')
+        local lcount = vim.api.nvim_buf_line_count(buf)
+        if mark[1] > 0 and mark[1] <= lcount then
+            pcall(vim.api.nvim_win_set_cursor, 0, mark)
+        end
     end,
 })
 
-autocmd('BufWritePre', {
-    group = vim.api.nvim_create_augroup('UserFormatOnSave', { clear = true }),
-    pattern = { '*.c', '*.cpp', '*.h', '*.hpp', '*.lua', '*.py', '*.rs', '*.ts', '*.tsx', '*.js', '*.jsx' },
-    callback = function(ev)
-        vim.lsp.buf.format({ bufnr = ev.buf, async = false, timeout_ms = 2000 })
-    end,
+-- close some filetypes with <q>
+vim.api.nvim_create_autocmd("FileType", {
+    group = augroup("close_with_q"),
+    pattern = {
+        "PlenaryTestPopup",
+        "checkhealth",
+        "dap-float",
+        "dbout",
+        "gitsigns-blame",
+        "grug-far",
+        "help",
+        "lspinfo",
+        "neotest-output",
+        "neotest-output-panel",
+        "neotest-summary",
+        "notify",
+        "qf",
+        "spectre_panel",
+        "startuptime",
+        "tsplayground",
+    },
+    callback = function(event)
+        vim.bo[event.buf].buflisted = false
+        vim.schedule(function()
+            vim.keymap.set("n", "q", function()
+                vim.cmd("close")
+                pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
+            end, {
+            buffer = event.buf,
+            silent = true,
+            desc = "Quit buffer",
+        })
+    end)
+end,
 })
 
-autocmd("BufWritePre", {
-    group = vim.api.nvim_create_augroup("TrimWhitespaceOnSave", { clear = true }),
-    pattern = { "*" },
-    command = [[%s/\s\+$//e]],
+-- Remove whitespace on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*",
+    callback = function()
+        local pos = vim.api.nvim_win_get_cursor(0)
+        vim.cmd([[keeppatterns %s/\s\+$//e]])
+        vim.api.nvim_win_set_cursor(0, pos)
+    end,
 })

@@ -1,8 +1,0 @@
-require("plugins.lz")
-require("plugins.colorscheme")
-require("plugins.tree-sitter")
-require("plugins.lsp")
-require("plugins.blink-cmp")
-require("plugins.fidget")
-require("plugins.copilot")
-require("plugins.gitsigns")
