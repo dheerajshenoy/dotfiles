@@ -17,15 +17,20 @@
   (make-backup-files nil)
   (require-final-newline t)
   (display-line-numbers-type 'visual)
+  (auto-save-default nil)
   (tab-width 4)
   (indent-tabs-mode nil)
   (treesit-font-lock-level 4)
   :config
-  (load custom-file 'noerror))
+  (load custom-file 'noerror)
+  (setq bidi-inhibit-bpa t)
+  (setq fast-but-imprecise-scrolling t)
+  (setq redisplay-skip-fontification-on-input t)
+  (setq-default bidi-paragraph-direction 'left-to-right))
 
 ;;; Appearance
 (set-fringe-style 0)
-(set-face-attribute 'default nil :family "Berkeley Mono")
+(set-face-attribute 'default nil :family "JetBrainsMono" :height 120)
 
 ;;; Built-in minor modes
 (recentf-mode)
@@ -36,7 +41,7 @@
 (global-so-long-mode)
 (global-auto-revert-mode)
 (electric-indent-mode -1)
-
+(which-key-mode)
 
 ;;; Built-in packages
 (use-package isearch
@@ -75,6 +80,7 @@
 
 (use-package format-all
   :ensure t
+  :defer t
   :hook ((c-ts-base-mode . format-all-mode)
          (format-all-mode . format-all-ensure-formatter))
   :config
@@ -130,3 +136,41 @@
 (keymap-global-set "<backspace>" #'my/smart-backspace)
 (keymap-global-set "C-<backspace>" #'my/backward-delete-word)
 (keymap-set prog-mode-map "RET" #'newline-and-indent)
+(keymap-global-set "C-z" nil)
+(keymap-set c-ts-base-mode-map "C-c o" #'ff-find-other-file)
+
+(load-theme 'modus-vivendi-tinted t)
+
+(setq-default ff-search-directories
+              '("." "../include" "../src" "../*/include" "../*/src"))
+
+(defface my-ml-buffer '((t :inherit font-lock-function-name-face :weight bold)) "Buffer name.")
+(defface my-ml-pos    '((t :inherit font-lock-type-face)) "Line/column.")
+(defface my-ml-vc     '((t :inherit font-lock-string-face)) "VC branch.")
+(defface my-ml-mode   '((t :inherit font-lock-keyword-face :slant italic)) "Major mode.")
+
+(setq-default mode-line-format '("%e"
+                         mode-line-front-space
+                         (:propertize
+                          ("" mode-line-mule-info mode-line-client mode-line-modified
+                           mode-line-remote mode-line-window-dedicated)
+                          display (min-width (6.0)))
+                         " "
+                          (:propertize "%b" face my-ml-buffer)
+                          " "
+                          " %l:%c"
+                          " " (vc-mode vc-mode)
+                          mode-line-format-right-align
+                          " "
+                          (:propertize mode-name face my-ml-mode)
+                          mode-line-end-spaces))
+
+(use-package imenu
+  :ensure nil
+  :config
+  (setq imenu-flatten t)
+  (setq imenu-auto-rescan t))
+
+(use-package goto-last-change
+  :ensure t
+  :bind (("C-z" . goto-last-change)))
