@@ -2,3 +2,4 @@ emacs/elpa/
 emacs/eln-cache/
 emacs/history
 emacs/*.eld
+emacs/tree-sitter/
