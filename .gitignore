@@ -3,3 +3,4 @@ emacs/eln-cache/
 emacs/history
 emacs/*.eld
 emacs/tree-sitter/
+emacs/transient/
