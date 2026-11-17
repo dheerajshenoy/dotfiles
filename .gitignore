@@ -4,4 +4,5 @@ emacs/history
 emacs/*.eld
 emacs/tree-sitter/
 emacs/transient/
-nvim/*.json
+nvim/lazy-lock.json
+nvim/nvim-pack-lock.json
