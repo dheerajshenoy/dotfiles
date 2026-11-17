@@ -18,6 +18,7 @@ return {
             'json',
             'typst',
             'latex',
+            'glsl',
         }
 
         -- the new version doesn't enable highlighting by itself

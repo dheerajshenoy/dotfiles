@@ -50,13 +50,13 @@ end, { desc = "Format" })
 
 -- diagnostic
 local diagnostic_goto = function(next, severity)
-  return function()
-    vim.diagnostic.jump({
-      count = (next and 1 or -1) * vim.v.count1,
-      severity = severity and vim.diagnostic.severity[severity] or nil,
-      float = true,
-    })
-  end
+    return function()
+        vim.diagnostic.jump({
+            count = (next and 1 or -1) * vim.v.count1,
+            severity = severity and vim.diagnostic.severity[severity] or nil,
+            float = true,
+        })
+    end
 end
 
 map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
@@ -66,3 +66,6 @@ map("n", "[e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
 map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
+-- lsp
+map("n", "<leader>fp", "<cmd>LspClangdSwitchSourceHeader<cr>", { desc = "Switch Source/Header" })
+map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", { desc = "Code Action" })

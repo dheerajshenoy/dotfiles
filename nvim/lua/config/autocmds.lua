@@ -80,12 +80,12 @@ vim.api.nvim_create_autocmd("FileType", {
                 vim.cmd("close")
                 pcall(vim.api.nvim_buf_delete, event.buf, { force = true })
             end, {
-            buffer = event.buf,
-            silent = true,
-            desc = "Quit buffer",
-        })
-    end)
-end,
+                buffer = event.buf,
+                silent = true,
+                desc = "Quit buffer",
+            })
+        end)
+    end,
 })
 
 -- Remove whitespace on save

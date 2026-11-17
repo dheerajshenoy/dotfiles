@@ -10,6 +10,7 @@ return {
         { '<leader>fr', '<cmd>Telescope oldfiles<cr>',    desc = 'Recent files' },
         { '<leader>fs', '<cmd>Telescope lsp_document_symbols<cr>', desc = 'Symbols' },
         { 'gr',         '<cmd>Telescope lsp_references<cr>', desc = 'References' },
+        { '<leader>fo', '<cmd>Telescope lsp_document_symbols<cr>', desc = 'Document symbols' },
     },
     opts = {},
 }
