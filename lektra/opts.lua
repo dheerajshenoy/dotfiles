@@ -44,15 +44,21 @@ opt.statusbar = {
 }
 
 -- opt.behavior.single_instance = true
-opt.links.hover_preview = true
-opt.picker.highlight_matches = true
-opt.picker.highlight_matches_color = 0xFF5000FF
-opt.laser_pointer.trail = true
+opt.links.hover_preview = {
+    enabled = true,
+    width = 800,
+    height = 600,
+}
+
+-- opt.picker.highlight = true
+opt.picker.highlight_matches.color = 0xFF5000FF
+opt.laser_pointer.trail.enabled = true
 opt.behavior.keep_view = true
 
+opt.annotations.highlight.glow.enabled = false
 
 opt.presentation = {
-    fit_mode = "width",
+    fit_mode = lektra.FitMode.Width,
     allowed_actions = { "zoom_in", "zoom_out", "next_page", "previous_page" },
     laser_on_start = true,
 }
