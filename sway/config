@@ -142,15 +142,15 @@ bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 # Special key to take a screenshot with grim
 
-bindsym $mod+F7 exec hyprshot -m region
-bindsym $mod+F8 exec hyprshot -m window
+
+bindsym $mod+F7 exec grim -c ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png
 
 #
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    swaybar_command waybar 
+    swaybar_command waybar
 }
 
 
