@@ -9,7 +9,7 @@ window#waybar {
     color: #cdd6f4;
 }
 
-#cpu, #memory, #battery, #clock, #tray {
+#cpu, #memory, #battery, #clock, #tray, #window {
     padding: 0 10px;
 }
 
