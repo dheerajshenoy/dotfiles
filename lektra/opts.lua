@@ -48,6 +48,7 @@ opt.statusbar = {
 
 -- opt.behavior.single_instance = true
 opt.links.hover_preview = {
+    page_number = false,
     enabled = true,
     width = 800,
     height = 600,
@@ -57,7 +58,7 @@ opt.links.hover_preview = {
 opt.laser_pointer.trail.enabled = true
 opt.behavior.keep_view = true
 
-opt.annotations.highlight.glow.enabled = false
+opt.annotations.glow.enabled = false
 opt.annotations.popup.comment.latex = true
 
 opt.presentation = {
