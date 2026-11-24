@@ -58,6 +58,7 @@ opt.links.hover_preview = {
 opt.laser_pointer.trail.enabled = true
 opt.behavior.keep_view = true
 
+opt.rendering.backend = lektra.Backend.OpenGL
 opt.annotations.glow.enabled = false
 opt.annotations.popup.comment.latex = true
 
@@ -66,7 +67,6 @@ opt.presentation = {
     allowed_actions = { "zoom_in", "zoom_out", "next_page", "previous_page" },
     laser_on_start = true,
 }
-
 
 opt.picker = {
     show_header = false,
