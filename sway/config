@@ -157,11 +157,6 @@ bar {
 gaps outer 10
 gaps inner 10
 
-# output "AU Optronics 0xE3AC Unknown" disable
-# output "HP Inc. HP 524pu 1H35321M53" resolution 1920x1080 position 0,0 scale 1.0
-# output "HP Inc. HP E27 G5 CNC4231NW9" resolution 1920x1080 position 3456,0 scale 1.0
-# output "HP Inc. HP P24h G5 3CM5031JJC" resolution 1920x1080 position 5376,0 scale 1.0
-
 exec --no-startup-id gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gpg
 exec --no-startup-id /lib64/polkit-gnome/polkit-gnome-authentication-agent-1
 output * bg ~/Gits/wallpapers/9dwtei1vn1ve1.png fill

@@ -1,7 +1,7 @@
 {
     "workspace": {
         "library": [
-            "~/Gits/muwm/lua/mu.lua",
+            "~/Gits/muwm/lua/mu.lua"
         ],
     },
 }

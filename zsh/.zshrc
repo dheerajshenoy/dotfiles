@@ -79,6 +79,7 @@ alias sozrc='source ~/.zshrc'
 alias lg='lazygit'
 alias oe='nvim $(fzf)'
 alias tree='tree -a'
+alias todo='nvim ~/Gits/PhD/TODO.md'
 
 # PACMAN ALIASES
 ## Load only if `pacman` is installed

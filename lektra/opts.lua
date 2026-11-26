@@ -16,6 +16,7 @@ opt.tabs = {
 opt.scrollbars = {
     horizontal = false,
     vertical = true,
+    only_with_hits = true,
 }
 
 opt.rendering.page_shadow = {

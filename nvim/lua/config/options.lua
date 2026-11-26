@@ -3,6 +3,7 @@ vim.g.maplocalleader = " "
 
 local opt = vim.opt
 
+opt.swapfile = false
 opt.autowrite = true
 opt.clipboard = "unnamedplus"
 opt.completeopt = "menu,menuone,noselect"
